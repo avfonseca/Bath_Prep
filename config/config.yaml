@@ -1,0 +1,89 @@
+# Data processing settings
+data:
+  input_dir: "data/LAS/Cape_Neddick_2021"
+  output_dir: "Output"
+  features:
+    - "X"
+    - "Y"
+    - "Z"
+  coordinate_processing:
+    normalize_xy: true
+    preserve_z: true
+
+# Clustering settings
+clustering:
+  mode: "adaptive"  # "adaptive" or "fixed"
+  # Fixed mode parameters
+  points_per_leaf: 1000    # used when mode is "fixed"
+  # Adaptive mode parameters
+  target_cell_size: 1.0    # meters, used when mode is "adaptive"
+  min_points: 512          # minimum division threshold for either mode
+  beam_angle: 0.5          # degrees, used when mode is "adaptive"
+  max_tree_depth: 20
+  verbose: true
+
+# Processing settings
+processing:
+  gpu:
+    enable: true
+    memory_buffer: 0.2  # Fraction of GPU memory to keep free
+  memory_management:
+    max_batch_size: 1000000
+    enable_batching: true
+    clusters_per_file: 700000  # Number of clusters before creating a new file
+  compression:
+    method: "gzip"
+    level: 4
+
+# Output settings
+output:
+  formats:
+    - "hdf5"
+    - "yaml"
+    - "ply"
+    - "las"
+  directory_structure:
+    clusters: "Clusters"
+    images: "Images"
+    logs: "Logs"
+    point_clouds: "PointClouds"
+
+# Logging settings
+logging:
+  level: "INFO"
+  file_logging: true
+  console_logging: true
+
+# Visualization settings
+visualization:
+  histogram:
+    figure_size: [12, 6]
+    bins: 100
+    color: [0.0, 0.0, 1.0]  # RGB values for blue
+    alpha: 0.7
+    dpi: 300
+    interval: 10000  # Create histogram every N clusters
+  kde:
+    num_points: 1000  # Number of points to evaluate KDE
+    color: [1.0, 0.0, 0.0]  # RGB values for red
+    line_width: 2
+    # KDE parameters
+    bw_method: 'scott'  # Use Scott's rule for bandwidth estimation
+    min_bandwidth_factor: 0.1  # Minimum bandwidth as fraction of data range
+    max_samples: 10000  # Maximum number of points to use for KDE estimation
+    # Peak detection parameters
+    peak_detection:
+      enable: true
+      min_height: 0  # Minimum peak height relative to maximum density
+      min_distance: 0.1  # Minimum distance between peaks as fraction of data range
+      prominence: 0.01  # Minimum peak prominence relative to neighboring peaks
+      marker_size: 10  # Size of peak markers in points
+      marker_color: [1.0, 0.0, 0.0]  # RGB values for red dots
+
+# Point cloud settings
+point_cloud:
+  las_version: "1.4"
+  point_format: 6
+  output_formats:
+    - "las"
+    - "ply"
