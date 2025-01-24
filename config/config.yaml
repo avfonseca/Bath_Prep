@@ -68,15 +68,15 @@ visualization:
     color: [1.0, 0.0, 0.0]  # RGB values for red
     line_width: 2
     # KDE parameters
-    bw_method: 'scott'  # Use Scott's rule for bandwidth estimation
-    min_bandwidth_factor: 0.1  # Minimum bandwidth as fraction of data range
+    bw_method: 'silverman'  # Use Scott's rule for bandwidth estimation
+    min_bandwidth_factor: 0.05  # Minimum bandwidth as fraction of data range
     max_samples: 10000  # Maximum number of points to use for KDE estimation
     # Peak detection parameters
     peak_detection:
       enable: true
-      min_height: 0  # Minimum peak height relative to maximum density
-      min_distance: 0.1  # Minimum distance between peaks as fraction of data range
-      prominence: 0.01  # Minimum peak prominence relative to neighboring peaks
+      min_height: 0.001  # Minimum peak height relative to maximum density
+      min_distance: 0.001  # Minimum distance between peaks as fraction of data range
+      prominence: 0.001  # Minimum peak prominence relative to neighboring peaks
       marker_size: 10  # Size of peak markers in points
       marker_color: [1.0, 0.0, 0.0]  # RGB values for red dots
 

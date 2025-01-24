@@ -29,14 +29,24 @@ class BathymetryProcessor:
         # Load config first
         self.config = self._load_config(config_path)
         
+        # Get timestamp once for consistent naming
+        self.timestamp = time.strftime('%Y%m%d-%H%M%S')
+        
         # Initialize all config-dependent attributes
         self.verbose = self.config['clustering']['verbose']
-        self.timestamp = time.strftime('%Y%m%d-%H%M%S')
         
         # Setup all directories first
         self.base_dir = Path(self.config['data']['output_dir'])
         self.setup_directories()
-        self.logs_dir = self.base_dir / self.config['output']['directory_structure']['logs']
+        
+        # Create configs directory and save current config
+        configs_dir = self.base_dir / "Configs" / time.strftime("%Y%m%d_%H%M")
+        configs_dir.mkdir(parents=True, exist_ok=True)
+        config_backup_path = configs_dir / "config.yaml"
+        
+        # Save a copy of the config
+        with open(config_backup_path, 'w') as f:
+            yaml.dump(self.config, f, default_flow_style=False)
         
         # Setup logging based on config
         self.setup_logging()
