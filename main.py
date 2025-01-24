@@ -39,6 +39,9 @@ class BathymetryProcessor:
         self.base_dir = Path(self.config['data']['output_dir'])
         self.setup_directories()
         
+        # Set logs directory
+        self.logs_dir = self.base_dir / self.config['output']['directory_structure']['logs']
+        
         # Create configs directory and save current config
         configs_dir = self.base_dir / "Configs" / time.strftime("%Y%m%d_%H%M")
         configs_dir.mkdir(parents=True, exist_ok=True)
